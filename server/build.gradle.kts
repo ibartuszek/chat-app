@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.4.31"
 	kotlin("plugin.spring") version "1.4.31"
+	id("io.gitlab.arturbosch.detekt") version "1.16.0"
 }
 
 group = "com.example.chatapp"
@@ -13,6 +14,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 dependencies {
@@ -31,4 +33,18 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+detekt {
+	val mainFolder = "build-config"
+	allRules = true
+	config = files(projectDir.resolve(mainFolder).resolve("detekt.yml"))
+	baseline = file(projectDir.resolve(mainFolder).resolve("baseline.xml"))
+
+	reports {
+		html.enabled = true
+		xml.enabled = false
+		txt.enabled = false
+		sarif.enabled = false
+	}
 }
