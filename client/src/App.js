@@ -3,6 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import ChatHistory from './chat/ChatHistory';
 
 const serverAddress = "http://localhost:8080/ws-chat";
 const topicToListen = "/topic/public";
@@ -15,16 +16,35 @@ class App extends Component {
     this.state = {
       name: "John Doe",
       message: "",
-      stompClient: null
+      stompClient: null,
+      messages: []
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state.stompClient = this.connect();
+    this.onMessageReceived = this.onMessageReceived.bind(this);
 
   }
 
-  connect() {
+  componentDidMount() {
+    let client = this.connect(this.onMessageReceived);
+    this.setState({
+      stompClient: client
+    });
+  }
+
+  onMessageReceived(message) {
+    console.log(`Message received=${message}`);
+    let newMessageList = this.state.messages;
+    let newMessage = JSON.parse(message.body);
+    newMessageList.push(newMessage);
+    this.setState({
+      messages: newMessageList
+    })
+    console.log(this.state)
+  }
+
+  connect(onMessageReceived) {
     console.log(`Client trying to connect to server=${serverAddress}`);
     let sock = new SockJS(serverAddress);
     let stompClient = Stomp.over(sock);
@@ -36,9 +56,7 @@ class App extends Component {
 
     stompClient.connect({}, function (frame) {
       console.log("Connected: " + frame);
-      stompClient.subscribe(topicToListen, function (message) {
-        console.log(`Message received=${message}`);
-      });
+      stompClient.subscribe(topicToListen, onMessageReceived)
     });
 
     return stompClient;
@@ -70,9 +88,12 @@ class App extends Component {
   }
 
   render() {
+
     return (
       <div className="body">
         <h1>Chat application</h1>
+        <hr/>
+        <ChatHistory messages={this.state.messages} />
         <hr/>
         <form className="w-75 mx-auto py-3 row" onSubmit={this.handleSubmit}>
           <label className="col-form-label">Message</label>
@@ -80,6 +101,7 @@ class App extends Component {
                   value={this.state.value} onChange={this.handleChange} />
           <input type="submit" value="Send" className="btn btn-light ml-3 col-3" />
         </form>
+
       </div>
     );
   }
