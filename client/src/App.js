@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import ChatHistory from './chat/ChatHistory';
+import ChatInput from './chat/ChatInput';
 
 const serverAddress = "http://localhost:8080/ws-chat";
 const topicToListen = "/topic/public";
@@ -14,15 +15,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "John Doe",
-      message: "",
       stompClient: null,
       messages: []
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.onMessageReceived = this.onMessageReceived.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
 
   }
 
@@ -41,7 +39,6 @@ class App extends Component {
     this.setState({
       messages: newMessageList
     })
-    console.log(this.state)
   }
 
   connect(onMessageReceived) {
@@ -62,29 +59,8 @@ class App extends Component {
     return stompClient;
   }
 
-  handleChange(event) {
-    this.setState({
-      message: event.target.value
-    })
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    console.log(`Send message: name=${this.state.name} message=${this.state.message}`);
-    this.sendMessage();
-  }
-
-  sendMessage() {
-    let msg = this.createMessage();
-    this.state.stompClient.send(topicToSend, {}, msg);
-  }
-
-  createMessage() {
-    const message = {
-      name: this.state.name,
-      message: this.state.message
-    };
-    return JSON.stringify(message);
+  sendMessage(message) {
+    this.state.stompClient.send(topicToSend, {}, message);
   }
 
   render() {
@@ -95,13 +71,7 @@ class App extends Component {
         <hr/>
         <ChatHistory messages={this.state.messages} />
         <hr/>
-        <form className="w-75 mx-auto py-3 row" onSubmit={this.handleSubmit}>
-          <label className="col-form-label">Message</label>
-          <input type="text" className="form-control col ml-3"
-                  value={this.state.value} onChange={this.handleChange} />
-          <input type="submit" value="Send" className="btn btn-light ml-3 col-3" />
-        </form>
-
+        <ChatInput sendMessage={this.sendMessage}/>
       </div>
     );
   }
