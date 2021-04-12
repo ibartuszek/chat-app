@@ -1,6 +1,12 @@
 import { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+
+const serverAddress = "http://localhost:8080/ws-chat";
+const topicToListen = "/topic/public";
+const topicToSend = "/app/send";
 
 class App extends Component {
 
@@ -8,12 +14,34 @@ class App extends Component {
     super(props);
     this.state = {
       name: "John Doe",
-      message: ""
+      message: "",
+      stompClient: null
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state.stompClient = this.connect();
 
+  }
+
+  connect() {
+    console.log(`Client trying to connect to server=${serverAddress}`);
+    let sock = new SockJS(serverAddress);
+    let stompClient = Stomp.over(sock);
+    stompClient.debug = null;
+
+    sock.onopen = function() {
+      console.log("Client connected successfully");
+    }
+
+    stompClient.connect({}, function (frame) {
+      console.log("Connected: " + frame);
+      stompClient.subscribe(topicToListen, function (message) {
+        console.log(`Message received=${message}`);
+      });
+    });
+
+    return stompClient;
   }
 
   handleChange(event) {
@@ -25,6 +53,20 @@ class App extends Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(`Send message: name=${this.state.name} message=${this.state.message}`);
+    this.sendMessage();
+  }
+
+  sendMessage() {
+    let msg = this.createMessage();
+    this.state.stompClient.send(topicToSend, {}, msg);
+  }
+
+  createMessage() {
+    const message = {
+      name: this.state.name,
+      message: this.state.message
+    };
+    return JSON.stringify(message);
   }
 
   render() {
