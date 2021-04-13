@@ -14,10 +14,10 @@ class MessageController {
         val logger: Logger = LoggerFactory.getLogger(MessageController::javaClass.name)
     }
 
-    @MessageMapping("/user-all")
-    @SendTo("/topic/user")
+    @MessageMapping("/send")
+    @SendTo("/topic/public")
     fun pushMessage(message: Message): Message {
-        logger.info("New message name={} message={}", message.name, message.message)
+        logger.info("New message date={} name={} message={}", message.date, message.name, message.message)
         return message
     }
 
