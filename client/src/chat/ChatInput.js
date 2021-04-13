@@ -32,6 +32,7 @@ class ChatInput extends Component {
     
     createMessage() {
       const message = {
+        date: new Date(),
         name: this.state.name,
         message: this.state.message
       };
