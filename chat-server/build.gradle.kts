@@ -15,6 +15,8 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
+	// detekt
+	jcenter()
 }
 
 dependencies {
