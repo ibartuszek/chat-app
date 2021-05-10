@@ -3,8 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.4.5"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	kotlin("jvm") version "1.4.31"
-	kotlin("plugin.spring") version "1.4.31"
+	kotlin("jvm") version "1.5.0"
+	kotlin("plugin.spring") version "1.5.0"
+	kotlin("plugin.serialization") version "1.5.0"
 	id("io.gitlab.arturbosch.detekt") version "1.16.0"
 }
 
@@ -14,13 +15,16 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
-	jcenter()
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-websocket")
+	testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
