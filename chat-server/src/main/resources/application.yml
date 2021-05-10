@@ -1,0 +1,7 @@
+app:
+  name: chat-server
+
+mongo:
+  address: ${app.name}-mongodb
+  port: 27017
+  database-name: ${app.name}
