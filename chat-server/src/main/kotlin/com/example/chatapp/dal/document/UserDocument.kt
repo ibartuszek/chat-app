@@ -3,19 +3,13 @@ package com.example.chatapp.dal.document
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import org.springframework.data.mongodb.core.mapping.Document
-import javax.validation.constraints.Email
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
 
 @Document(collection = "userCollection")
 data class UserDocument(
         @Id
         var id: String?,
-        @NotBlank
         var name: String,
-        @Email
         var email: String,
-        @NotNull
         var active: Boolean,
         @Version
         var version: Long) {
