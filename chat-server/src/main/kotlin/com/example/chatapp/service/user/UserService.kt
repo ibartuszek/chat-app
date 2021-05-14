@@ -42,7 +42,6 @@ class UserService(val userTransformer: UserTransformer, val userRepository: User
         original.name = user.name
         original.email = user.email
         original.active = true
-        original.version += 1
         return original
     }
 
