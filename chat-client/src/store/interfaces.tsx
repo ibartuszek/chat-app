@@ -11,9 +11,12 @@ export interface IAction {
 
 export interface IState {
   users: Array<IUser>;
+  usersAreLoaded: Boolean;
 }
 
 export interface IUser {
-  id: string;
-  name: string;
+  id: String;
+  name: String;
+  email: String;
+  active: Boolean;
 }
