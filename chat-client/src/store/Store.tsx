@@ -2,15 +2,15 @@ import React from "react";
 import { ActionType, IAction, IState } from "./interfaces";
 
 const initialState: IState = {
-  people: [],
+  users: [],
 };
 
 export const Store = React.createContext<IState | any>(initialState);
 
 function reducer(state: IState, action: IAction): IState {
   switch (action.type) {
-    case ActionType.LoadPeople:
-      return { ...state, people: action.payload };
+    case ActionType.LoadUsers:
+      return { ...state, users: action.payload };
     default:
       return state;
   }

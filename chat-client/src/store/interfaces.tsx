@@ -1,19 +1,19 @@
 export type Dispatch = React.Dispatch<IAction>;
 
 export enum ActionType {
-  LoadPeople = "LOAD_PEOPLE",
+  LoadUsers = "LOAD_USERS",
 }
 
 export interface IAction {
   type: ActionType;
-  payload: Array<IPeople>;
+  payload: Array<IUser>;
 }
 
 export interface IState {
-  people: Array<IPeople>;
+  users: Array<IUser>;
 }
 
-export interface IPeople {
+export interface IUser {
   id: string;
   name: string;
 }
