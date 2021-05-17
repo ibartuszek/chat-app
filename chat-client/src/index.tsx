@@ -9,7 +9,6 @@ ReactDOM.render(
   <React.StrictMode>
     <StoreProvider>
       <h1 className="p-3">Chat application</h1>
-      <div className="container"></div>
       <Main />
     </StoreProvider>
   </React.StrictMode>,
