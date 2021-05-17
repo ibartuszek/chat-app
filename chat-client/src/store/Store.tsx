@@ -3,7 +3,7 @@ import { ActionType, IAction, IState } from "./interfaces";
 
 const initialState: IState = {
   users: [],
-  usersAreLoaded: false
+  usersAreLoaded: false,
 };
 
 export const Store = React.createContext<IState | any>(initialState);

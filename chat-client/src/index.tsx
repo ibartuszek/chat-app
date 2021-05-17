@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Main from "./components/Main";
+import Main from "./components/main/Main";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import StoreProvider from "./store/Store";
