@@ -8,10 +8,13 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class UserService(val userTransformer: UserTransformer, val userRepository: UserRepository) {
+class UserService(private val userTransformer: UserTransformer, private val userRepository: UserRepository) {
 
     companion object {
         private val log = LoggerFactory.getLogger(UserService::class.java)
+
+        private const val ANONYMIZED_NAME = "¯\\_(ツ)_/¯"
+        private const val ANONYMIZED_EMAIL = "***@***.***"
     }
 
     fun create(userRequest: NewUserRequest): UserModel {
@@ -45,11 +48,12 @@ class UserService(val userTransformer: UserTransformer, val userRepository: User
         return original
     }
 
-    fun delete(id: String) {
-        if (!userRepository.existsById(id)) {
-            throw createNoSuchElementException(id)
-        }
-        userRepository.deleteById(id)
+    fun anonymize(id: String) {
+        val user = getUserFromCollection(id)
+        user.name = ANONYMIZED_NAME
+        user.email = ANONYMIZED_EMAIL
+        user.active = false
+        userRepository.save(user)
     }
 
 }

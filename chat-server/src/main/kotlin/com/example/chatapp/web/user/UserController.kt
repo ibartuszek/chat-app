@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank
 
 @RestController
 @RequestMapping("/chat/rest/user")
-class UserController(val userService: UserService) {
+class UserController(private val userService: UserService) {
 
     companion object {
         private val log = LoggerFactory.getLogger(UserController::class.java)
@@ -50,7 +50,7 @@ class UserController(val userService: UserService) {
     @DeleteMapping("/{id}")
     fun deleteById(@NotBlank @PathVariable id: String) {
         log.info("Delete user by id={}", id)
-        userService.delete(id)
+        userService.anonymize(id)
     }
 
 }

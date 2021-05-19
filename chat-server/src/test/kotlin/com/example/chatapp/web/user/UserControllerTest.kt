@@ -5,8 +5,8 @@ import com.example.chatapp.domain.NewUserRequest
 import com.example.chatapp.domain.UserModel
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -203,7 +203,10 @@ internal class UserControllerTest : ChatAppApplicationTests() {
         // then
         assertEquals(HttpStatus.OK.value(), actualResponse.status)
         assertNotNull(originalDocument)
-        assertNull(mongoDbHelper.getAllUser().firstOrNull { it.id == EXISTING_USER_ID })
+        val anonymizedUser = mongoDbHelper.getAllUser().firstOrNull { it.id == EXISTING_USER_ID }!!
+        assertEquals("¯\\_(ツ)_/¯", anonymizedUser.name)
+        assertEquals("***@***.***", anonymizedUser.email)
+        assertFalse(anonymizedUser.active)
     }
 
 }
