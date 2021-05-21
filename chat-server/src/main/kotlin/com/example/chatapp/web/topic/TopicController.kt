@@ -42,9 +42,9 @@ class TopicController(private val topicService: TopicService) {
     }
 
     @DeleteMapping("/{id}")
-    fun deleteById(@NotBlank @PathVariable id: String) {
+    fun deleteById(@NotBlank @PathVariable id: String, @NotBlank @RequestBody ownerId: String) {
         log.info("Delete topic by id={}", id)
-        topicService.disable(id)
+        topicService.close(id, ownerId)
     }
 
 }
