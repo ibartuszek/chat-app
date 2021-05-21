@@ -2,6 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>LongParameterList:TopicDocument.kt$TopicDocument$( @Id var id: String?, var ownerId: String, var name: String, var active: Boolean, var userIds: List&lt;String&gt;, var messages: List&lt;Message&gt;, @Version var version: Long )</ID>
     <ID>SpreadOperator:ChatAppApplication.kt$(*args)</ID>
   </CurrentIssues>
 </SmellBaseline>
