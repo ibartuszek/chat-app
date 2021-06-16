@@ -2,6 +2,7 @@ package com.example.chatapp.web.topic
 
 import com.example.chatapp.domain.NewTopicRequest
 import com.example.chatapp.domain.TopicModel
+import com.example.chatapp.domain.TopicUpdateRequest
 import com.example.chatapp.service.topic.TopicService
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -36,9 +37,10 @@ class TopicController(private val topicService: TopicService) {
     }
 
     @PatchMapping
-    fun update(@Valid @RequestBody topic: TopicModel): TopicModel {
-        log.info("Update topic={}", topic)
-        return topicService.update(topic)
+    fun update(@Valid @RequestBody request: TopicUpdateRequest): TopicModel {
+        log.info("Update topic id=${request.id} by owner=${request.ownerId} "
+                + "name=${request.ownerId} active=${request.ownerId}")
+        return topicService.update(request)
     }
 
     @DeleteMapping("/{id}")

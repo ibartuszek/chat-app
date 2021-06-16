@@ -1,0 +1,35 @@
+[
+  {
+    "id": "60a79e3388a5ec5eea0b5de2",
+    "ownerId": "609e2343d4b6a54baa32c475",
+    "name": "Just chat",
+    "active": true,
+    "userIds": [
+      "609e2376d4b6a54baa32c476",
+      "609e2b83d4b6a54baa32c477"
+    ],
+    "messages": []
+  },
+  {
+    "id": "60a79e5888a5ec5eea0b5de3",
+    "ownerId": "609e2c45d4b6a54baa32c478",
+    "name": "Lunch ideas",
+    "active": true,
+    "userIds": [
+      "609e2343d4b6a54baa32c475",
+      "609e2cf9d4b6a54baa32c479"
+    ],
+    "messages": []
+  },
+  {
+    "id": "60a79ea688a5ec5eea0b5de4",
+    "ownerId": "609e2376d4b6a54baa32c476",
+    "name": "Spiderman gossips",
+    "active": true,
+    "userIds": [
+      "609e2b83d4b6a54baa32c477"
+    ],
+    "messages": []
+  }
+]
+

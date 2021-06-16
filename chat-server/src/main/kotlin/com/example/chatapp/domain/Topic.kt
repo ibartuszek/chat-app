@@ -63,3 +63,10 @@ data class NewTopicRequest(
         @field:NotEmpty(message = EMPTY_USER_IDS)
         val userIds: List<String>
 )
+
+data class TopicUpdateRequest(
+        var id: String,
+        var ownerId: String,
+        var name: String? = null,
+        var active: Boolean? = null
+)

@@ -22,6 +22,8 @@ class TopicDao(private val topicRepository: TopicRepository, private val mongoTe
 
     fun save(document: TopicDocument) = topicRepository.save(document)
 
+    fun findById(id: String): TopicDocument? = topicRepository.findById(id).orElseGet(null)
+
     /**
      * Troubleshooting, development method should be used only by Internal controller
      */

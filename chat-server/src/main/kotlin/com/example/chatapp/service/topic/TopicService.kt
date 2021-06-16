@@ -3,8 +3,10 @@ package com.example.chatapp.service.topic
 import com.example.chatapp.dal.repository.TopicDao
 import com.example.chatapp.domain.NewTopicRequest
 import com.example.chatapp.domain.TopicModel
+import com.example.chatapp.domain.TopicUpdateRequest
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.lang.IllegalStateException
 
 @Service
 class TopicService(private val transformer: TopicTransformer, private val dao: TopicDao) {
@@ -25,10 +27,15 @@ class TopicService(private val transformer: TopicTransformer, private val dao: T
         return topicList.map { transformer.transform(it) }
     }
 
-    fun update(topic: TopicModel): TopicModel {
-        // should send update message
-        log.info("Topic id=${topic.id} is updated")
-        return topic
+    fun update(request: TopicUpdateRequest): TopicModel {
+        if (request.active != null || request.name != null) {
+            val document = dao.findById(request.id)
+            log.info("Topic id=${topic.id} is updated")
+            // should send update message
+            return topic
+        } else {
+            throw IllegalStateException("NO UPDATES")
+        }
     }
 
     fun close(id: String, ownerId: String) {
